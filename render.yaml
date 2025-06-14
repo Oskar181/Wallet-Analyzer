@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: wallet-analyzer
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ETHERSCAN_API_KEY
+        sync: false
+      - key: BASESCAN_API_KEY
+        sync: false
