@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Wallet Analyzer - Crypto Portfolio Scanner</title>
+    <meta name="description" content="Privacy-first crypto portfolio scanner. Check if whales have your tokens!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🔍</span>
+                <span>Wallet Analyzer</span>
+            </div>
+            <select class="network-selector" id="networkSelector">
+                <option value="ethereum">🔷 Ethereum Mainnet</option>
+                <option value="base">🔵 Base Mainnet</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Scan Wallet!</h1>
+            <p>Check if all the whales you track have your token!</p>
+        </section>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-group">
+                <div class="input-label">
+                    <h3>📁 Wallet Addresses</h3>
+                    <span class="counter" id="walletCounter">0 / 50</span>
+                </div>
+                <textarea 
+                    class="input-textarea" 
+                    id="walletsInput"
+                    placeholder="0x742d35Cc6634C0532925a3b8D2645Ff9b5B4b6bE
+0x8ba1f109551bD432803012645Hac136c5F7eB4B5B
+0x1234567890123456789012345678901234567890
+..."
+                    spellcheck="false"
+                ></textarea>
+                <div class="input-hint">Enter wallet addresses, one per line (max 50)</div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <h3>🪙 Token Addresses</h3>
+                    <span class="counter" id="tokenCounter">0 / 20</span>
+                </div>
+                <textarea 
+                    class="input-textarea" 
+                    id="tokensInput"
+                    placeholder="0xdAC17F958D2ee523a2206206994597C13D831ec7
+0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4CE
+0x6B175474E89094C44Da98b954EedeAC495271d0F
+..."
+                    spellcheck="false"
+                ></textarea>
+                <div class="input-hint">Enter token contract addresses, one per line (max 20)</div>
+            </div>
+        </section>
+
+        <!-- Controls -->
+        <section class="controls">
+            <button class="btn btn-primary" id="analyzeBtn">
+                <span>🚀</span>
+                <span>Analyze Wallets</span>
+            </button>
+            <button class="btn btn-secondary" id="validateBtn">
+                <span>✅</span>
+                <span>Validate Addresses</span>
+            </button>
+            <button class="btn btn-secondary" id="clearBtn">
+                <span>🗑️</span>
+                <span>Clear All</span>
+            </button>
+        </section>
+
+        <!-- Loading Section -->
+        <section class="loading-section" id="loadingSection" style="display: none;">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">
+                <h3>🔄 Analyzing Blockchain Data...</h3>
+                <p id="loadingMessage">Initializing analysis...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+        </section>
+
+        <!-- Debug Console -->
+        <section class="debug-console" id="debugConsole">
+            <div class="debug-header">
+                <h3>🔍 Analysis Console</h3>
+                <button class="debug-toggle" id="debugToggle">Hide</button>
+            </div>
+            <div class="debug-content" id="debugContent">
+                <!-- Debug logs will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <!-- Stats Grid -->
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+
+            <!-- Results Tabs -->
+            <div class="results-tabs" id="resultsTabs">
+                <button class="tab active" data-category="all">
+                    🎯 ALL Tokens
+                    <span class="tab-count" id="allCount">0</span>
+                </button>
+                <button class="tab" data-category="some">
+                    ⚡ SOME Tokens
+                    <span class="tab-count" id="someCount">0</span>
+                </button>
+                <button class="tab" data-category="none">
+                    ❌ NO Tokens
+                    <span class="tab-count" id="noneCount">0</span>
+                </button>
+            </div>
+
+            <!-- Results Content -->
+            <div class="results-content">
+                <div class="tab-content active" id="allResults">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+                <div class="tab-content" id="someResults">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+                <div class="tab-content" id="noneResults">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="errorSection" style="display: none;">
+            <div class="error-content">
+                <h3>❌ Analysis Error</h3>
+                <p id="errorMessage"></p>
+                <button class="btn btn-primary" id="retryBtn">
+                    🔄 Retry Analysis
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Wallet Analyzer | Privacy-First Crypto Portfolio Scanner</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#about">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
