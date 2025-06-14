@@ -29,6 +29,8 @@ app.use(cors({
   credentials: true
 }));
 
+app.set('trust proxy', true);
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: (process.env.RATE_LIMIT_WINDOW || 15) * 60 * 1000,
