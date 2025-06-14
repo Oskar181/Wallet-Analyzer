@@ -24,7 +24,7 @@ app.use(helmet({
 // CORS
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-app.onrender.com'] 
+    ? ['https://wallet-analyzer.onrender.com'] 
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   credentials: true
 }));
@@ -44,18 +44,22 @@ app.use(express.urlencoded({ extended: true }));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// API Routes
-const analyzeRoutes = require('./routes/analyze');
-app.use('/api', analyzeRoutes);
-
-// Health check
+// Health check endpoint (FIXED - TYLKO JEDEN!)
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
-    env: process.env.NODE_ENV 
+    env: process.env.NODE_ENV || 'development',
+    service: 'Wallet Analyzer API',
+    version: '1.0.0',
+    etherscan: process.env.ETHERSCAN_API_KEY ? 'configured' : 'missing',
+    basescan: process.env.BASESCAN_API_KEY ? 'configured' : 'fallback'
   });
 });
+
+// API Routes
+const analyzeRoutes = require('./routes/analyze');
+app.use('/api', analyzeRoutes);
 
 // Serve main app
 app.get('/', (req, res) => {
@@ -76,21 +80,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-// Health check endpoint (WAŻNE: przed innymi routes!)
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    timestamp: new Date().toISOString(),
-    env: process.env.NODE_ENV || 'development',
-    service: 'Wallet Analyzer API',
-    version: '1.0.0'
-  });
-});
-
 app.listen(PORT, () => {
   console.log(`🚀 Wallet Analyzer running on port ${PORT}`);
   console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔑 Etherscan API: ${process.env.ETHERSCAN_API_KEY ? 'Configured' : 'Missing'}`);
+  console.log(`🔑 Basescan API: ${process.env.BASESCAN_API_KEY ? 'Configured' : 'Using Etherscan fallback'}`);
 });
 
 module.exports = app;
