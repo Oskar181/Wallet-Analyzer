@@ -24,6 +24,16 @@ router.post('/analyze', async (req, res) => {
       });
     }
 
+    // API health check
+router.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    api: 'Wallet Analyzer API',
+    version: '1.0.0'
+  });
+});
+
     // Validate addresses
     const walletValidation = validateAddresses(wallets);
     const tokenValidation = validateAddresses(tokens);
