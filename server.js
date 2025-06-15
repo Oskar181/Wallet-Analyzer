@@ -43,7 +43,7 @@ app.use(cors({
 // Rate limiting - zmniejszone limity dla bezpieczeństwa
 const limiter = rateLimit({
   windowMs: (parseInt(process.env.RATE_LIMIT_WINDOW) || 15) * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX) || 30, // 🔧 ZMIENIONE z 100 na 30
+  max: parseInt(process.env.RATE_LIMIT_MAX) || 50, // 🔧 ZMIENIONE z 100 na 50
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true, // ✨ DODANE: Return rate limit info in headers
   legacyHeaders: false   // ✨ DODANE: Disable X-RateLimit-* headers
@@ -107,7 +107,7 @@ app.listen(PORT, () => {
   console.log(`🔑 Etherscan API: ${process.env.ETHERSCAN_API_KEY ? 'Configured' : 'Missing'}`);
   console.log(`🔑 Basescan API: ${process.env.BASESCAN_API_KEY ? 'Configured' : 'Missing'}`);
   console.log(`🛡️ CORS Origins: ${getAllowedOrigins().join(', ')}`);
-  console.log(`🚦 Rate Limit: ${parseInt(process.env.RATE_LIMIT_MAX) || 30} requests per ${parseInt(process.env.RATE_LIMIT_WINDOW) || 15} minutes`);
+  console.log(`🚦 Rate Limit: ${parseInt(process.env.RATE_LIMIT_MAX) || 50} requests per ${parseInt(process.env.RATE_LIMIT_WINDOW) || 15} minutes`);
 });
 
 module.exports = app;
