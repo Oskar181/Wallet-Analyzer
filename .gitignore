@@ -1,24 +1,36 @@
-# Environment variables
+# ===================================
+# ENVIRONMENT VARIABLES - NIGDY NIE COMMITUJ!
+# ===================================
 .env
 .env.local
-.env.production
+.env.*.local
 .env.development
+.env.production
+.env.staging
+.env.test
 
-# Dependencies
+# API Keys i secrets - dodatkowe zabezpieczenie
+*.key
+*.pem
+*.p12
+secrets.json
+config/secrets.js
+.secrets/
+
+# ===================================
+# NODE.JS
+# ===================================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 
-# Production builds
-dist/
-build/
-
-# Logs
+# ===================================
+# RUNTIME & LOGS
+# ===================================
 logs/
 *.log
-
-# Runtime data
 pids/
 *.pid
 *.seed
@@ -26,8 +38,29 @@ pids/
 
 # Coverage directory used by tools like istanbul
 coverage/
+*.lcov
 
-# OS generated files
+# ===================================
+# BUILD & DIST
+# ===================================
+build/
+dist/
+.next/
+out/
+
+# ===================================
+# CACHE DIRECTORIES
+# ===================================
+.npm/
+.eslintcache
+.node_repl_history
+.yarn-integrity
+.cache/
+.parcel-cache/
+
+# ===================================
+# OS GENERATED FILES
+# ===================================
 .DS_Store
 .DS_Store?
 ._*
@@ -35,13 +68,49 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# IDE files
+# ===================================
+# IDE & EDITOR FILES
+# ===================================
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+*.sublime-project
+*.sublime-workspace
 
-# Temporary files
+# ===================================
+# TEMPORARY FILES
+# ===================================
 tmp/
 temp/
+*.tmp
+*.bak
+*.backup
+
+# ===================================
+# DATABASE FILES
+# ===================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ===================================
+# DOCKER
+# ===================================
+.dockerignore
+Dockerfile.dev
+
+# ===================================
+# TESTING
+# ===================================
+.nyc_output/
+jest.config.local.js
+
+# ===================================
+# VERCEL & DEPLOYMENT
+# ===================================
+.vercel/
+.netlify/
